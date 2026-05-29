@@ -1,10 +1,27 @@
 import streamlit as st
-import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-import joblib
+import matplotlib.font_manager as fm
+import os
 
+# 1. 한글 폰트 설정 (파일 최상단에 추가)
+def unique_config_font():
+    # Streamlit Cloud 환경 (리눅스) 폰트 경로
+    path_linux = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+    
+    if os.path.exists(path_linux):
+        # 운영 서버 환경 (packages.txt에 fonts-nanum 추가 필수)
+        font_name = fm.FontProperties(fname=path_linux).get_name()
+        plt.rc('font', family=font_name)
+    else:
+        # 로컬 환경 (Windows 등)
+        plt.rc('font', family='Malgun Gothic')
+    
+    # 마이너스 기호 깨짐 방지
+    plt.rcParams['axes.unicode_minus'] = False
+
+unique_config_font()
+
+# --- 여기서부터 기존 코드를 작성하세요 ---
 st.title("폐 건강 군집화 프로그램")
 
 # CSV 파일 불러오기
