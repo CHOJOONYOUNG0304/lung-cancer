@@ -1,31 +1,31 @@
 import streamlit as st
-import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import os
+import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 
 # =========================================================
-# 1. 한글 폰트 설정 (코드 최상단 유지)
+# [한글 깨짐 해결] 이 부분을 코드 최상단에 고정하세요
 # =========================================================
-def setup_korean_font():
-    # Streamlit Cloud(리눅스) 환경의 나눔 폰트 경로
+def fix_korean_font():
+    # 1. Streamlit Cloud(리눅스) 환경 폰트 설정
     linux_font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
     
     if os.path.exists(linux_font_path):
-        # 서버 환경 (packages.txt 설치 필요)
-        font_prop = fm.FontProperties(fname=linux_font_path)
-        plt.rc('font', family=font_prop.get_name())
+        font_name = fm.FontProperties(fname=linux_font_path).get_name()
+        plt.rc('font', family=font_name)
     else:
-        # 로컬 환경 (Windows/macOS)
-        plt.rc('font', family='Malgun Gothic') # 윈도우 기준
+        # 2. 로컬(윈도우) 환경 폰트 설정
+        plt.rc('font', family='Malgun Gothic')
         
     # 마이너스 기호 깨짐 방지
     plt.rcParams['axes.unicode_minus'] = False
 
-setup_korean_font()
+fix_korean_font()
+# =========================================================
 
 # =========================================================
 # 2. 메인 앱 로직
